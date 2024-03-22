@@ -39,3 +39,71 @@ const images = [
         text: 'Marvel\'s Avengers is an epic, third-person, action-adventure game that combines an original, cinematic story with single-player and co-operative gameplay.',
     }
 ];
+
+// valore active di default
+let activeImg = 0;
+
+const mainImgContainer = document.querySelector('#main-container');
+const sideImgContainer = document.querySelector('#side-container');
+for (let i = 0; i < images.length; i++) {
+    const thisImage = images[i];
+    console.log(thisImage.image);
+
+    const newImage = `
+    <div id="text" class="position-absolute text-white bottom-0 end-0 text-end pe-3">
+        <h3>${thisImage.title}</h3>
+        <p>${thisImage.text}</p>
+    </div>
+    <img class="main" src="${thisImage.image}" alt="${thisImage.title}"> 
+    `
+    mainImgContainer.innerHTML += newImage;
+
+    const newSide = `
+    <img class="side" src="${thisImage.image}" alt="${thisImage.title}">
+    `
+    sideImgContainer.innerHTML += newSide;
+}
+// aggiunta active default
+const allImages = document.querySelectorAll('.main');
+allImages[activeImg].classList.add('active');
+const text = document.querySelectorAll('#text');
+text[activeImg].classList.add('active');
+const allSide = document.querySelectorAll('.side');
+allSide[activeImg].classList.add('active');
+
+const down = document.querySelector('.down');
+down.addEventListener('click', function (){
+
+    document.querySelector('.main.active').classList.remove('active');
+    document.querySelector('#text.active').classList.remove('active');
+    document.querySelector('.side.active').classList.remove('active');
+    if (activeImg < allImages.length - 1) {
+        activeImg++;
+    } else {
+        activeImg = 0;
+    }
+    console.log(activeImg);
+
+allImages[activeImg].classList.add('active');
+text[activeImg].classList.add('active');
+allSide[activeImg].classList.add('active');
+});
+
+const up = document.querySelector('.up');
+up.addEventListener('click', function() {
+
+    document.querySelector('.main.active').classList.remove('active');
+    document.querySelector('#text.active').classList.remove('active');
+    document.querySelector('.side.active').classList.remove('active');
+
+    if(activeImg > 0) {
+        activeImg--;
+    } else {
+        activeImg = allImages.length - 1;
+    }
+
+    allImages[activeImg].classList.add('active');
+    text[activeImg].classList.add('active');
+    allSide[activeImg].classList.add('active');
+});
+
